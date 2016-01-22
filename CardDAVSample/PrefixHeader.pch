@@ -1,0 +1,14 @@
+//
+//  PrefixHeader.pch
+//  CardDAV4iOS
+//
+//  Created by Vikas Jalan on 1/14/16.
+//  Copyright © 2016 Vikas Jalan. All rights reserved.
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+    #import <CardDAV4iOS/CardDAV4iOS.h>
+#endif
+
