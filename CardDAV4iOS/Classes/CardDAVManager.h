@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFNetworking.h"
+#import "CardDAV4iOS.h"
 
 @interface CardDAVManager : NSObject
 
@@ -20,5 +20,9 @@
 - (void)startSyncingForUserName:(NSString *)userName withPassword:(NSString *)password baseURL:(NSString *)baseURL;
 
 - (void)reset;
+
+- (NSString *)getResponse;
+
+- (NSString *)getErrorInfo;
 
 @end

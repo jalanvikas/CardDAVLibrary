@@ -69,6 +69,9 @@
 		F66E3FA81C46613B00D25F49 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F66E3F871C46613B00D25F49 /* UIRefreshControl+AFNetworking.m */; };
 		F66E3FA91C46613B00D25F49 /* UIWebView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = F66E3F881C46613B00D25F49 /* UIWebView+AFNetworking.h */; };
 		F66E3FAA1C46613B00D25F49 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F66E3F891C46613B00D25F49 /* UIWebView+AFNetworking.m */; };
+		F6B360851C55F8F700A95AF6 /* CardDAVRequestHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B360831C55F8F700A95AF6 /* CardDAVRequestHelper.h */; };
+		F6B360861C55F8F700A95AF6 /* CardDAVRequestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B360841C55F8F700A95AF6 /* CardDAVRequestHelper.m */; };
+		F6B360871C55F8F700A95AF6 /* CardDAVRequestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B360841C55F8F700A95AF6 /* CardDAVRequestHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -124,6 +127,8 @@
 		F66E3F871C46613B00D25F49 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		F66E3F881C46613B00D25F49 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		F66E3F891C46613B00D25F49 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
+		F6B360831C55F8F700A95AF6 /* CardDAVRequestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardDAVRequestHelper.h; sourceTree = "<group>"; };
+		F6B360841C55F8F700A95AF6 /* CardDAVRequestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardDAVRequestHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +213,7 @@
 		F66E3ED81C46290800D25F49 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F6B360821C55F64000A95AF6 /* Networking */,
 				F63359F01C4778570094585A /* Constants */,
 				F66E3F661C46613B00D25F49 /* External */,
 				F66E3EDF1C462B5E00D25F49 /* Modal */,
@@ -282,6 +288,15 @@
 			path = "UIKit+AFNetworking";
 			sourceTree = "<group>";
 		};
+		F6B360821C55F64000A95AF6 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				F6B360831C55F8F700A95AF6 /* CardDAVRequestHelper.h */,
+				F6B360841C55F8F700A95AF6 /* CardDAVRequestHelper.m */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -292,6 +307,7 @@
 				F66E3FA41C46613B00D25F49 /* UIKit+AFNetworking.h in Headers */,
 				F66E3FA51C46613B00D25F49 /* UIProgressView+AFNetworking.h in Headers */,
 				F63359F31C4779100094585A /* CardDAVConstants.h in Headers */,
+				F6B360851C55F8F700A95AF6 /* CardDAVRequestHelper.h in Headers */,
 				F66E3F971C46613B00D25F49 /* AFAutoPurgingImageCache.h in Headers */,
 				F66E3F951C46613B00D25F49 /* AFURLSessionManager.h in Headers */,
 				F66E3EDD1C462B4500D25F49 /* CardDAVManager.h in Headers */,
@@ -429,6 +445,7 @@
 				F63359E51C4776320094585A /* UIRefreshControl+AFNetworking.m in Sources */,
 				F63359E71C4776320094585A /* UIWebView+AFNetworking.m in Sources */,
 				F63359E91C4776320094585A /* CardDAVManager.m in Sources */,
+				F6B360871C55F8F700A95AF6 /* CardDAVRequestHelper.m in Sources */,
 				F63359EF1C47782E0094585A /* CardDAVContactInfo.m in Sources */,
 				F63359B21C4772D60094585A /* ViewController.m in Sources */,
 				F63359AF1C4772D60094585A /* AppDelegate.m in Sources */,
@@ -453,6 +470,7 @@
 				F66E3F921C46613B00D25F49 /* AFURLRequestSerialization.m in Sources */,
 				F66E3F9C1C46613B00D25F49 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				F66E3F961C46613B00D25F49 /* AFURLSessionManager.m in Sources */,
+				F6B360861C55F8F700A95AF6 /* CardDAVRequestHelper.m in Sources */,
 				F66E3F8E1C46613B00D25F49 /* AFNetworkReachabilityManager.m in Sources */,
 				F66E3F941C46613B00D25F49 /* AFURLResponseSerialization.m in Sources */,
 				F66E3F8B1C46613B00D25F49 /* AFHTTPSessionManager.m in Sources */,

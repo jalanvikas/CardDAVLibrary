@@ -266,8 +266,6 @@ didCompleteWithError:(NSError *)error
         data = [self.mutableData copy];
         //We no longer need the reference, so nil it out to gain back some memory.
         self.mutableData = nil;
-        NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"dataString: %@", dataString);
     }
 
     if (self.downloadFileURL) {
@@ -291,8 +289,8 @@ didCompleteWithError:(NSError *)error
     } else {
         dispatch_async(url_session_manager_processing_queue(), ^{
             NSError *serializationError = nil;
-            if ([manager.responseSerializer isKindOfClass:[AFJSONResponseSerializer class]])
-                responseObject = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            if (manager.ignoreSerializerForResponse)
+                responseObject = data;
             else
                 responseObject = [manager.responseSerializer responseObjectForResponse:task.response data:data error:&serializationError];
 

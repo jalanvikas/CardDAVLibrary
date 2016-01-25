@@ -7,8 +7,7 @@
 //
 
 #import "CardDAVManager.h"
-#import "AFURLRequestSerialization.h"
-#import "AFURLSessionManager.h"
+#import "CardDAVRequestHelper.h"
 
 @interface CardDAVManager ()
 
@@ -16,7 +15,12 @@
 @property (nonatomic, copy) NSString *password;
 @property (nonatomic, copy) NSString *baseURL;
 
+@property (nonatomic, copy) NSString *response;
+@property (nonatomic, copy) NSString *errorInfo;
+
 #pragma mark - Private Methods
+
+- (NSString *)getURLForFullCardDAVSync;
 
 - (void)startSyncing;
 
@@ -53,31 +57,37 @@
 
 #pragma mark - Private Methods
 
+- (NSString *)getURLForFullCardDAVSync
+{
+    return [NSString stringWithFormat:@"%@/dav/%@/Contacts/", self.baseURL, self.userName];
+}
+
 - (void)startSyncing
 {
-    NSURL *url = [NSURL URLWithString:self.baseURL];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setValue:@"1" forHTTPHeaderField:@"Depth"];
-    [request setHTTPMethod:@"PROPFIND"];
+    self.errorInfo = nil;
+    self.response = nil;
     
-    NSString *authStr = [NSString stringWithFormat:@"%@:%@", self.userName, self.password];
-    NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength]];
-    [request setValue:authValue forHTTPHeaderField:@"Authorization"];
-    
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
-    
-    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-        if (error) {
-            NSLog(@"Error: %@", error);
-        } else {
-            NSLog(@"%@ %@", response, responseObject);
+    CardDAVRequestHelper *requestHelper = [CardDAVRequestHelper requestHelperForFullCardDAVInfoForUserName:self.userName password:self.password url:[self getURLForFullCardDAVSync] completion:^(NSURLResponse *response, id responseObject, NSError *error)
+    {
+        if (error)
+        {
+            self.errorInfo = [NSString stringWithFormat:@"Error: %@", error];
+            [[NSNotificationCenter defaultCenter] postNotificationName:CARD_DAV_SYNC_FAILED_NOTIFICATION object:nil];
+        }
+        else if ((nil != response) && ([response isKindOfClass:[NSHTTPURLResponse class]]) && (401 == [(NSHTTPURLResponse *)response statusCode]))
+        {
+            self.errorInfo = @"Invalid Username/Password";
+            [[NSNotificationCenter defaultCenter] postNotificationName:CARD_DAV_SYNC_FAILED_NOTIFICATION object:nil];
+        }
+        else if ([responseObject isKindOfClass:[NSData class]])
+        {
+            self.response = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            [[NSNotificationCenter defaultCenter] postNotificationName:CARD_DAV_SYNC_COMPLETED_NOTIFICATION object:nil];
         }
     }];
-    [dataTask resume];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:CARD_DAV_SYNC_STARTED_NOTIFICATION object:nil];
+    [requestHelper startRequest];
 }
 
 #pragma mark - Custom Method
@@ -96,6 +106,16 @@
     self.userName = nil;
     self.password = nil;
     self.baseURL = nil;
+}
+
+- (NSString *)getResponse
+{
+    return self.response;
+}
+
+- (NSString *)getErrorInfo
+{
+    return self.errorInfo;
 }
 
 @end
