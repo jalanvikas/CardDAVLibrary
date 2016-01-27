@@ -19,6 +19,14 @@
 
 - (void)startSyncingForUserName:(NSString *)userName withPassword:(NSString *)password baseURL:(NSString *)baseURL;
 
+- (void)syncContactFromServer:(CardDAVContactInfo *)contactInfo;
+
+- (void)addContact:(CardDAVContactInfo *)contactInfo;
+
+- (void)updateContact:(CardDAVContactInfo *)contactInfo;
+
+- (void)deleteContact:(CardDAVContactInfo *)contactInfo;
+
 - (void)reset;
 
 - (NSString *)getResponse;

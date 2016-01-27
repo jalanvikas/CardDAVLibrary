@@ -18,5 +18,12 @@
 @property (nonatomic, copy) NSString *nameSuffix;
 @property (nonatomic, copy) NSString *displayName;
 @property (nonatomic, copy) NSString *note;
+@property (nonatomic, strong) NSDate *vcardRevision;
+
+// For Internal Use only.
+@property (nonatomic, copy) NSString *UID;
+@property (nonatomic, copy) NSString *vcardHRef;
+@property (nonatomic, strong) NSDate *lastModifiedDate;
+@property (nonatomic, copy) NSString *eTag;
 
 @end

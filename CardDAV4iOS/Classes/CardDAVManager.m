@@ -22,6 +22,10 @@
 
 - (NSString *)getURLForFullCardDAVSync;
 
+- (NSString *)getURLForVCard:(CardDAVContactInfo *)contactInfo;
+
+- (NSString *)getURLForAddingVCard:(CardDAVContactInfo *)contactInfo;
+
 - (void)startSyncing;
 
 @end
@@ -60,6 +64,16 @@
 - (NSString *)getURLForFullCardDAVSync
 {
     return [NSString stringWithFormat:@"%@/dav/%@/Contacts/", self.baseURL, self.userName];
+}
+
+- (NSString *)getURLForVCard:(CardDAVContactInfo *)contactInfo
+{
+    return [NSString stringWithFormat:@"%@%@", self.baseURL, [contactInfo vcardHRef]];
+}
+
+- (NSString *)getURLForAddingVCard:(CardDAVContactInfo *)contactInfo
+{
+    return [NSString stringWithFormat:@"%@/dav/%@/Contacts/%@.vcf", self.baseURL, self.userName, [contactInfo UID]];
 }
 
 - (void)startSyncing
@@ -101,11 +115,81 @@
     [self startSyncing];
 }
 
+- (void)syncContactFromServer:(CardDAVContactInfo *)contactInfo
+{
+    CardDAVRequestHelper *requestHelper = [CardDAVRequestHelper requestHelperForVCardInfoForUserName:self.userName password:self.password url:[self getURLForVCard:contactInfo] completion:^(NSURLResponse *response, id responseObject, NSError *error)
+   {
+       if (error)
+       {
+           
+       }
+       else
+       {
+           
+       }
+   }];
+    
+    [requestHelper startRequest];
+}
+
+- (void)addContact:(CardDAVContactInfo *)contactInfo
+{
+    CardDAVRequestHelper *requestHelper = [CardDAVRequestHelper requestHelperForAddVCardInfoForUserName:self.userName password:self.password url:[self getURLForAddingVCard:contactInfo] vCardInfo:contactInfo completion:^(NSURLResponse *response, id responseObject, NSError *error)
+    {
+       if (error)
+       {
+           
+       }
+       else
+       {
+           
+       }
+    }];
+    
+    [requestHelper startRequest];
+}
+
+- (void)updateContact:(CardDAVContactInfo *)contactInfo
+{
+    CardDAVRequestHelper *requestHelper = [CardDAVRequestHelper requestHelperForUpdateVCardInfoForUserName:self.userName password:self.password url:[self getURLForVCard:contactInfo] vCardInfo:contactInfo completion:^(NSURLResponse *response, id responseObject, NSError *error)
+   {
+       if (error)
+       {
+           
+       }
+       else
+       {
+           
+       }
+   }];
+    
+    [requestHelper startRequest];
+}
+
+- (void)deleteContact:(CardDAVContactInfo *)contactInfo
+{
+    CardDAVRequestHelper *requestHelper = [CardDAVRequestHelper requestHelperForDeleteVCardInfoForUserName:self.userName password:self.password url:[self getURLForVCard:contactInfo] vCardInfo:contactInfo completion:^(NSURLResponse *response, id responseObject, NSError *error)
+   {
+       if (error)
+       {
+           
+       }
+       else
+       {
+           
+       }
+   }];
+    
+    [requestHelper startRequest];
+}
+
 - (void)reset
 {
     self.userName = nil;
     self.password = nil;
     self.baseURL = nil;
+    self.response = nil;
+    self.errorInfo = nil;
 }
 
 - (NSString *)getResponse

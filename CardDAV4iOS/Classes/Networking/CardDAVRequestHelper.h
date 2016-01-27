@@ -22,6 +22,24 @@
                                        url:(NSString *)url
                                 completion:(void (^)(NSURLResponse *response, id responseObject, NSError *error))completion;
 
++ (id)requestHelperForAddVCardInfoForUserName:(NSString *)userName
+                                     password:(NSString *)password
+                                          url:(NSString *)url
+                                    vCardInfo:(CardDAVContactInfo *)contactInfo
+                                   completion:(void (^)(NSURLResponse *response, id responseObject, NSError *error))completion;
+
++ (id)requestHelperForUpdateVCardInfoForUserName:(NSString *)userName
+                                        password:(NSString *)password
+                                             url:(NSString *)url
+                                       vCardInfo:(CardDAVContactInfo *)contactInfo
+                                      completion:(void (^)(NSURLResponse *response, id responseObject, NSError *error))completion;
+
++ (id)requestHelperForDeleteVCardInfoForUserName:(NSString *)userName
+                                        password:(NSString *)password
+                                             url:(NSString *)url
+                                       vCardInfo:(CardDAVContactInfo *)contactInfo
+                                      completion:(void (^)(NSURLResponse *response, id responseObject, NSError *error))completion;
+
 #pragma mark - Custom Methods
 
 - (void)startRequest;

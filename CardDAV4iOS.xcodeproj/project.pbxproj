@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F632F1E61C58AB04007B2F3C /* CardDAVContactInfo+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F632F1E41C58AB04007B2F3C /* CardDAVContactInfo+Private.h */; };
+		F632F1E71C58AB04007B2F3C /* CardDAVContactInfo+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F632F1E51C58AB04007B2F3C /* CardDAVContactInfo+Private.m */; };
+		F632F1E81C58AB04007B2F3C /* CardDAVContactInfo+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F632F1E51C58AB04007B2F3C /* CardDAVContactInfo+Private.m */; };
 		F63359AC1C4772D60094585A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F63359AB1C4772D60094585A /* main.m */; };
 		F63359AF1C4772D60094585A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F63359AE1C4772D60094585A /* AppDelegate.m */; };
 		F63359B21C4772D60094585A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F63359B11C4772D60094585A /* ViewController.m */; };
@@ -75,6 +78,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F632F1E41C58AB04007B2F3C /* CardDAVContactInfo+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CardDAVContactInfo+Private.h"; sourceTree = "<group>"; };
+		F632F1E51C58AB04007B2F3C /* CardDAVContactInfo+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CardDAVContactInfo+Private.m"; sourceTree = "<group>"; };
 		F63359A81C4772D60094585A /* CardDAVSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardDAVSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F63359AB1C4772D60094585A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F63359AD1C4772D60094585A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -228,6 +233,8 @@
 			children = (
 				F63359EB1C4778230094585A /* CardDAVContactInfo.h */,
 				F63359EC1C4778230094585A /* CardDAVContactInfo.m */,
+				F632F1E41C58AB04007B2F3C /* CardDAVContactInfo+Private.h */,
+				F632F1E51C58AB04007B2F3C /* CardDAVContactInfo+Private.m */,
 			);
 			path = Modal;
 			sourceTree = "<group>";
@@ -317,6 +324,7 @@
 				F66E3F9F1C46613B00D25F49 /* UIButton+AFNetworking.h in Headers */,
 				F66E3FA21C46613B00D25F49 /* UIImageView+AFNetworking.h in Headers */,
 				F66E3F911C46613B00D25F49 /* AFURLRequestSerialization.h in Headers */,
+				F632F1E61C58AB04007B2F3C /* CardDAVContactInfo+Private.h in Headers */,
 				F66E3FA71C46613B00D25F49 /* UIRefreshControl+AFNetworking.h in Headers */,
 				F66E3F8D1C46613B00D25F49 /* AFNetworkReachabilityManager.h in Headers */,
 				F66E3F8F1C46613B00D25F49 /* AFSecurityPolicy.h in Headers */,
@@ -449,6 +457,7 @@
 				F63359EF1C47782E0094585A /* CardDAVContactInfo.m in Sources */,
 				F63359B21C4772D60094585A /* ViewController.m in Sources */,
 				F63359AF1C4772D60094585A /* AppDelegate.m in Sources */,
+				F632F1E81C58AB04007B2F3C /* CardDAVContactInfo+Private.m in Sources */,
 				F63359AC1C4772D60094585A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -465,6 +474,7 @@
 				F66E3EDE1C462B4500D25F49 /* CardDAVManager.m in Sources */,
 				F63359EE1C4778230094585A /* CardDAVContactInfo.m in Sources */,
 				F66E3FA01C46613B00D25F49 /* UIButton+AFNetworking.m in Sources */,
+				F632F1E71C58AB04007B2F3C /* CardDAVContactInfo+Private.m in Sources */,
 				F66E3F9A1C46613B00D25F49 /* AFImageDownloader.m in Sources */,
 				F66E3F9E1C46613B00D25F49 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				F66E3F921C46613B00D25F49 /* AFURLRequestSerialization.m in Sources */,
