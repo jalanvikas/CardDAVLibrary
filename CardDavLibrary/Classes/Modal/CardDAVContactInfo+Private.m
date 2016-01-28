@@ -1,6 +1,6 @@
 //
 //  CardDAVContactInfo+Private.m
-//  CardDAV4iOS
+//  CardDavLibrary
 //
 //  Created by Vikas Jalan on 1/27/16.
 //  Copyright © 2016 Vikas Jalan. All rights reserved.

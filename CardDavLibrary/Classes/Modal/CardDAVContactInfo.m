@@ -1,15 +1,13 @@
 //
-//  ViewController.h
-//  CardDAVSample
+//  CardDAVContactInfo.m
+//  CardDavLibrary
 //
 //  Created by Vikas Jalan on 1/14/16.
 //  Copyright © 2016 Vikas Jalan. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "CardDAVContactInfo.h"
 
-@interface ViewController : UIViewController
-
+@implementation CardDAVContactInfo
 
 @end
-

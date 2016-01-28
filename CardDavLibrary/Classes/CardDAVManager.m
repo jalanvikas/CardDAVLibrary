@@ -1,6 +1,6 @@
 //
 //  CardDAVManager.m
-//  CardDAV4iOS
+//  CardDavLibrary
 //
 //  Created by Vikas Jalan on 1/13/16.
 //  Copyright © 2016 Vikas Jalan. All rights reserved.
