@@ -75,6 +75,9 @@
 		F661A68F1C59E84E0031AF05 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F661A6881C59E84E0031AF05 /* ViewController.m */; };
 		F6A58E241C59E9BB004340D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F661A6801C59E84E0031AF05 /* LaunchScreen.storyboard */; };
 		F6A58E251C59E9BB004340D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F661A6821C59E84E0031AF05 /* Main.storyboard */; };
+		F6C68F261C59F7D200BBEDCF /* CardDAVUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = F6C68F241C59F7D200BBEDCF /* CardDAVUtilities.h */; };
+		F6C68F271C59F7D200BBEDCF /* CardDAVUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F6C68F251C59F7D200BBEDCF /* CardDAVUtilities.m */; };
+		F6C68F281C59FC2D00BBEDCF /* CardDAVUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F6C68F251C59F7D200BBEDCF /* CardDAVUtilities.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +147,8 @@
 		F661A6871C59E84E0031AF05 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		F661A6881C59E84E0031AF05 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		F66E3ECD1C46288300D25F49 /* CardDavLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CardDavLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6C68F241C59F7D200BBEDCF /* CardDAVUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardDAVUtilities.h; sourceTree = "<group>"; };
+		F6C68F251C59F7D200BBEDCF /* CardDAVUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardDAVUtilities.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +188,7 @@
 				F661A60F1C59E7A20031AF05 /* External */,
 				F661A6331C59E7A20031AF05 /* Modal */,
 				F661A6381C59E7A20031AF05 /* Networking */,
+				F6C68F231C59F7AA00BBEDCF /* Utilities */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -306,6 +312,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		F6C68F231C59F7AA00BBEDCF /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F6C68F241C59F7D200BBEDCF /* CardDAVUtilities.h */,
+				F6C68F251C59F7D200BBEDCF /* CardDAVUtilities.m */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -329,6 +344,7 @@
 				F661A6641C59E7A20031AF05 /* UIImageView+AFNetworking.h in Headers */,
 				F661A6481C59E7A20031AF05 /* AFSecurityPolicy.h in Headers */,
 				F661A64E1C59E7A20031AF05 /* AFURLResponseSerialization.h in Headers */,
+				F6C68F261C59F7D200BBEDCF /* CardDAVUtilities.h in Headers */,
 				F661A6601C59E7A20031AF05 /* UIButton+AFNetworking.h in Headers */,
 				F661A6681C59E7A20031AF05 /* UIProgressView+AFNetworking.h in Headers */,
 				F661A6771C59E7A20031AF05 /* CardDAVRequestHelper.h in Headers */,
@@ -452,6 +468,7 @@
 				F661A6471C59E7A20031AF05 /* AFNetworkReachabilityManager.m in Sources */,
 				F661A63F1C59E7A20031AF05 /* CardDAVManager.m in Sources */,
 				F661A65C1C59E7A20031AF05 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				F6C68F281C59FC2D00BBEDCF /* CardDAVUtilities.m in Sources */,
 				F661A6661C59E7A20031AF05 /* UIImageView+AFNetworking.m in Sources */,
 				F661A6621C59E7A20031AF05 /* UIButton+AFNetworking.m in Sources */,
 				F661A6731C59E7A20031AF05 /* CardDAVContactInfo+Private.m in Sources */,
@@ -470,6 +487,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F661A6721C59E7A20031AF05 /* CardDAVContactInfo+Private.m in Sources */,
+				F6C68F271C59F7D200BBEDCF /* CardDAVUtilities.m in Sources */,
 				F661A6691C59E7A20031AF05 /* UIProgressView+AFNetworking.m in Sources */,
 				F661A6781C59E7A20031AF05 /* CardDAVRequestHelper.m in Sources */,
 				F661A6751C59E7A20031AF05 /* CardDAVContactInfo.m in Sources */,

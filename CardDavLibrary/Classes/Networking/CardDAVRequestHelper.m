@@ -10,6 +10,7 @@
 #import "AFURLRequestSerialization.h"
 #import "AFURLSessionManager.h"
 #import "CardDAVContactInfo+Private.h"
+#import "CardDAVUtilities.h"
 
 typedef enum
 {
@@ -18,9 +19,11 @@ typedef enum
     eAddVCardInfoRequest,
     eUpdateVCardInfoRequest,
     eDeleteVCardInfoRequest,
+    eChangesCardDAVRequest,
+    eSyncTokenCardDAVRequest,
 }RequestMethodType;
 
-#define REQUEST_METHOD_TYPE     [NSArray arrayWithObjects:@"PROPFIND", @"GET", @"PUT", @"PUT", @"DELETE", nil]
+#define REQUEST_METHOD_TYPE     [NSArray arrayWithObjects:@"PROPFIND", @"GET", @"PUT", @"PUT", @"DELETE", @"REPORT", @"PROPFIND", nil]
 
 @interface CardDAVRequestHelper ()
 
@@ -75,6 +78,36 @@ typedef enum
                                                                               completion:completion];
     
     requestHelper.requestType = eFullCardDAVRequest;
+    
+    return requestHelper;
+}
+
++ (id)requestHelperForSyncTokenCardDAVInfoForUserName:(NSString *)userName
+                                             password:(NSString *)password
+                                                  url:(NSString *)url
+                                           completion:(void (^)(NSURLResponse *response, id responseObject, NSError *error))completion
+{
+    CardDAVRequestHelper *requestHelper = [[CardDAVRequestHelper alloc] initWithUserName:userName
+                                                                                password:password
+                                                                                     url:url
+                                                                              completion:completion];
+    
+    requestHelper.requestType = eSyncTokenCardDAVRequest;
+    
+    return requestHelper;
+}
+
++ (id)requestHelperForChangesCardDAVInfoForUserName:(NSString *)userName
+                                           password:(NSString *)password
+                                                url:(NSString *)url
+                                         completion:(void (^)(NSURLResponse *response, id responseObject, NSError *error))completion
+{
+    CardDAVRequestHelper *requestHelper = [[CardDAVRequestHelper alloc] initWithUserName:userName
+                                                                                password:password
+                                                                                     url:url
+                                                                              completion:completion];
+    
+    requestHelper.requestType = eChangesCardDAVRequest;
     
     return requestHelper;
 }
@@ -152,8 +185,11 @@ typedef enum
     NSURL *url = [NSURL URLWithString:self.url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
-    if (eFullCardDAVRequest == self.requestType)
+    if ((eFullCardDAVRequest == self.requestType) || (eChangesCardDAVRequest == self.requestType) || (eSyncTokenCardDAVRequest == self.requestType))
+    {
         [request setValue:@"1" forHTTPHeaderField:@"Depth"];
+        [request setValue:@"application/xml" forHTTPHeaderField:@"Content-Type"];
+    }
     
     if (eAddVCardInfoRequest == self.requestType)
         [request setValue:[self.contactInfo UID] forHTTPHeaderField:@"If-None-Match"];
@@ -163,8 +199,22 @@ typedef enum
     
     [request setHTTPMethod:[REQUEST_METHOD_TYPE objectAtIndex:self.requestType]];
     
-    if ((eAddVCardInfoRequest == self.requestType) || (eUpdateVCardInfoRequest == self.requestType))
+    if (eFullCardDAVRequest == self.requestType)
+    {
+        [request setHTTPBody:[[CardDAVUtilities getBodyForFullCardDAVRequest] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    else if (eSyncTokenCardDAVRequest == self.requestType)
+    {
+        [request setHTTPBody:[[CardDAVUtilities getSyncTokenCardDAVRequest] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    else if (eChangesCardDAVRequest == self.requestType)
+    {
+        [request setHTTPBody:[[CardDAVUtilities getBodyForChangesCardDAVRequest] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    else if ((eAddVCardInfoRequest == self.requestType) || (eUpdateVCardInfoRequest == self.requestType))
+    {
         [request setHTTPBody:[[self.contactInfo getVCardInfoForServerRequest] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
     
     // Adding Authorization
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", self.userName, self.password];

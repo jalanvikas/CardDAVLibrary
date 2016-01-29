@@ -60,11 +60,19 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Bdk-AB-od2">
-                                <rect key="frame" x="110" y="170" width="100" height="40"/>
+                                <rect key="frame" x="53" y="170" width="100" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Sync"/>
                                 <connections>
                                     <action selector="syncButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Oeg-wm-kHn"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8rA-Ts-s6A">
+                                <rect key="frame" x="168" y="170" width="100" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Resync"/>
+                                <connections>
+                                    <action selector="resyncButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="anH-Rk-AV3"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hlX-jh-MPc">
@@ -81,6 +89,7 @@
                         <outlet property="baseURL" destination="xzZ-Jj-jdC" id="h04-RH-l7x"/>
                         <outlet property="password" destination="V61-ls-gWg" id="NJw-W1-kUN"/>
                         <outlet property="response" destination="VPT-eo-ISg" id="GZj-QN-ovD"/>
+                        <outlet property="resyncButton" destination="8rA-Ts-s6A" id="MNx-Z0-dtS"/>
                         <outlet property="syncButton" destination="Bdk-AB-od2" id="bPu-JJ-c2u"/>
                         <outlet property="syncingStatus" destination="hlX-jh-MPc" id="cdX-zv-OyW"/>
                         <outlet property="userName" destination="5St-ob-Pu5" id="9bF-a1-E9P"/>

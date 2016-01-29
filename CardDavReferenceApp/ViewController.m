@@ -17,11 +17,14 @@
 @property (nonatomic, weak) IBOutlet UITextField *password;
 @property (nonatomic, weak) IBOutlet UITextField *baseURL;
 @property (nonatomic, weak) IBOutlet UIButton *syncButton;
+@property (nonatomic, weak) IBOutlet UIButton *resyncButton;
 @property (nonatomic, weak) IBOutlet UITextView *response;
 
 #pragma mark - Action Methods
 
 - (IBAction)syncButtonClicked:(id)sender;
+
+- (IBAction)resyncButtonClicked:(id)sender;
 
 #pragma mark - Notification Handler Methods
 
@@ -42,6 +45,10 @@
     self.syncButton.layer.cornerRadius = 10.0;
     self.syncButton.layer.borderColor = self.syncButton.titleLabel.textColor.CGColor;
     self.syncButton.layer.borderWidth = 1.0;
+    
+    self.resyncButton.layer.cornerRadius = 10.0;
+    self.resyncButton.layer.borderColor = self.syncButton.titleLabel.textColor.CGColor;
+    self.resyncButton.layer.borderWidth = 1.0;
     
     self.response.layer.cornerRadius = 5.0;
     self.response.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -81,6 +88,13 @@
     [[CardDAVManager sharedInstance] startSyncingForUserName:self.userName.text
                                                 withPassword:self.password.text
                                                      baseURL:self.baseURL.text];
+}
+
+- (IBAction)resyncButtonClicked:(id)sender
+{
+    [self.syncingStatus setText:@""];
+    [self.response setText:@""];
+    [[CardDAVManager sharedInstance] getChanges];
 }
 
 #pragma mark - Notification Handler Methods

@@ -18,6 +18,16 @@
                                              url:(NSString *)url
                                       completion:(void (^)(NSURLResponse *response, id responseObject, NSError *error))completion;
 
++ (id)requestHelperForSyncTokenCardDAVInfoForUserName:(NSString *)userName
+                                             password:(NSString *)password
+                                                  url:(NSString *)url
+                                           completion:(void (^)(NSURLResponse *response, id responseObject, NSError *error))completion;
+
++ (id)requestHelperForChangesCardDAVInfoForUserName:(NSString *)userName
+                                           password:(NSString *)password
+                                                url:(NSString *)url
+                                         completion:(void (^)(NSURLResponse *response, id responseObject, NSError *error))completion;
+
 + (id)requestHelperForVCardInfoForUserName:(NSString *)userName
                                   password:(NSString *)password
                                        url:(NSString *)url
