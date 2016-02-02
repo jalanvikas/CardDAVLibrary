@@ -21,9 +21,10 @@ typedef enum
     eDeleteVCardInfoRequest,
     eChangesCardDAVRequest,
     eSyncTokenCardDAVRequest,
+    eValidCardDAVUrlRequest,
 }RequestMethodType;
 
-#define REQUEST_METHOD_TYPE     [NSArray arrayWithObjects:@"PROPFIND", @"GET", @"PUT", @"PUT", @"DELETE", @"REPORT", @"PROPFIND", nil]
+#define REQUEST_METHOD_TYPE     [NSArray arrayWithObjects:@"PROPFIND", @"GET", @"PUT", @"PUT", @"DELETE", @"REPORT", @"PROPFIND", @"PROPFIND", nil]
 
 @interface CardDAVRequestHelper ()
 
@@ -66,6 +67,21 @@ typedef enum
 }
 
 #pragma mark - Initializer Methods
+
++ (id)requestHelperForValidCardDAVUrlForUserName:(NSString *)userName
+                                        password:(NSString *)password
+                                             url:(NSString *)url
+                                      completion:(void (^)(NSURLResponse *response, id responseObject, NSError *error))completion
+{
+    CardDAVRequestHelper *requestHelper = [[CardDAVRequestHelper alloc] initWithUserName:userName
+                                                                                password:password
+                                                                                     url:url
+                                                                              completion:completion];
+    
+    requestHelper.requestType = eValidCardDAVUrlRequest;
+    
+    return requestHelper;
+}
 
 + (id)requestHelperForFullCardDAVInfoForUserName:(NSString *)userName
                                         password:(NSString *)password
@@ -190,7 +206,7 @@ typedef enum
         [request setValue:@"1" forHTTPHeaderField:@"Depth"];
         [request setValue:@"application/xml" forHTTPHeaderField:@"Content-Type"];
     }
-    
+        
     if (eAddVCardInfoRequest == self.requestType)
         [request setValue:[self.contactInfo UID] forHTTPHeaderField:@"If-None-Match"];
     

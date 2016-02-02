@@ -25,5 +25,6 @@
 @property (nonatomic, copy) NSString *vcardHRef;
 @property (nonatomic, strong) NSDate *lastModifiedDate;
 @property (nonatomic, copy) NSString *eTag;
+@property (nonatomic, copy) NSString *status;
 
 @end

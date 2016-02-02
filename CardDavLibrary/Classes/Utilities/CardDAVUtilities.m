@@ -22,7 +22,7 @@
 
 + (NSString *)getBodyForChangesCardDAVRequest
 {
-    return @"<d:sync-collection xmlns:d=\"DAV:\"><d:sync-token>https://www.googleapis.com/carddav/v1/synctoken/0801100118D9AA9793EBCECA02</d:sync-token><d:sync-level>1</d:sync-level><d:prop><d:getetag/></d:prop></d:sync-collection>";
+    return @"<d:sync-collection xmlns:d=\"DAV:\"><d:sync-token>https://www.googleapis.com/carddav/v1/synctoken/0801100118A0A281C9B5D6CA02</d:sync-token><d:sync-level>1</d:sync-level><d:prop><d:getetag/></d:prop></d:sync-collection>";
 }
 
 + (NSString *)getVCardInfoForServerRequest

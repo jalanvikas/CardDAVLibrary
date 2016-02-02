@@ -9,16 +9,24 @@
 #import "CardDAVManager.h"
 #import "CardDAVRequestHelper.h"
 
+#define FETCHING_VALID_CARD_DAV_SERVER_URL          @".well-known/carddav"
+
 @interface CardDAVManager ()
 
 @property (nonatomic, copy) NSString *userName;
 @property (nonatomic, copy) NSString *password;
 @property (nonatomic, copy) NSString *baseURL;
+@property (nonatomic, copy) NSString *principalURL;
 
 @property (nonatomic, copy) NSString *response;
 @property (nonatomic, copy) NSString *errorInfo;
 
+@property (nonatomic, copy) NSString *cardDavSyncToken;
+@property (nonatomic, copy) NSString *cardDavCTag;
+
 #pragma mark - Private Methods
+
+- (NSString *)getURLForValidCardDAVServer;
 
 - (NSString *)getURLForFullCardDAVSync;
 
@@ -26,7 +34,13 @@
 
 - (NSString *)getURLForAddingVCard:(CardDAVContactInfo *)contactInfo;
 
+- (void)fetchValidCardDavServerURL;
+
 - (void)startSyncing;
+
+- (void)getSyncToken;
+
+- (void)syncChangesFromServer;
 
 @end
 
@@ -61,6 +75,11 @@
 
 #pragma mark - Private Methods
 
+- (NSString *)getURLForValidCardDAVServer
+{
+    return [NSString stringWithFormat:@"%@/%@", self.baseURL, FETCHING_VALID_CARD_DAV_SERVER_URL];
+}
+
 - (NSString *)getURLForFullCardDAVSync
 {
     return [NSString stringWithFormat:@"%@/carddav/v1/principals/%@/lists/default/", self.baseURL, self.userName];
@@ -74,6 +93,31 @@
 - (NSString *)getURLForAddingVCard:(CardDAVContactInfo *)contactInfo
 {
     return [NSString stringWithFormat:@"%@/dav/%@/Contacts/%@.vcf", self.baseURL, self.userName, [contactInfo UID]];
+}
+
+- (void)fetchValidCardDavServerURL
+{
+    CardDAVRequestHelper *requestHelper = [CardDAVRequestHelper requestHelperForValidCardDAVUrlForUserName:self.userName password:self.password url:[self getURLForValidCardDAVServer] completion:^(NSURLResponse *response, id responseObject, NSError *error)
+   {
+       if (error)
+       {
+           self.errorInfo = [NSString stringWithFormat:@"Error: %@", error];
+           [[NSNotificationCenter defaultCenter] postNotificationName:CARD_DAV_SYNC_FAILED_NOTIFICATION object:nil];
+       }
+       else if ((nil != response) && ([response isKindOfClass:[NSHTTPURLResponse class]]) && (401 == [(NSHTTPURLResponse *)response statusCode]))
+       {
+           self.response = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+           self.errorInfo = @"Invalid Username/Password";
+           [[NSNotificationCenter defaultCenter] postNotificationName:CARD_DAV_SYNC_FAILED_NOTIFICATION object:nil];
+       }
+       else if ([responseObject isKindOfClass:[NSData class]])
+       {
+           self.response = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+           [[NSNotificationCenter defaultCenter] postNotificationName:CARD_DAV_SYNC_COMPLETED_NOTIFICATION object:nil];
+       }
+   }];
+    
+    [requestHelper startRequest];
 }
 
 - (void)startSyncing
@@ -97,6 +141,7 @@
         {
             self.response = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
             [[NSNotificationCenter defaultCenter] postNotificationName:CARD_DAV_SYNC_COMPLETED_NOTIFICATION object:nil];
+            [self getSyncToken];
         }
     }];
     
@@ -104,18 +149,29 @@
     [requestHelper startRequest];
 }
 
-#pragma mark - Custom Method
-
-- (void)startSyncingForUserName:(NSString *)userName withPassword:(NSString *)password baseURL:(NSString *)baseURL
+- (void)getSyncToken
 {
-    self.userName = userName;
-    self.password = password;
-    self.baseURL = baseURL;
+    CardDAVRequestHelper *requestHelper = [CardDAVRequestHelper requestHelperForSyncTokenCardDAVInfoForUserName:self.userName password:self.password url:[self getURLForFullCardDAVSync] completion:^(NSURLResponse *response, id responseObject, NSError *error)
+   {
+       if (error)
+       {
+           self.errorInfo = [NSString stringWithFormat:@"Error: %@", error];
+       }
+       else if ((nil != response) && ([response isKindOfClass:[NSHTTPURLResponse class]]) && (401 == [(NSHTTPURLResponse *)response statusCode]))
+       {
+           self.errorInfo = @"Invalid Username/Password";
+       }
+       else if ([responseObject isKindOfClass:[NSData class]])
+       {
+           self.response = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+           [self syncChangesFromServer];
+       }
+   }];
     
-    [self startSyncing];
+    [requestHelper startRequest];
 }
 
-- (void)getChanges
+- (void)syncChangesFromServer
 {
     self.errorInfo = nil;
     self.response = nil;
@@ -141,6 +197,29 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:CARD_DAV_SYNC_STARTED_NOTIFICATION object:nil];
     [requestHelper startRequest];
+}
+
+#pragma mark - Custom Method
+
+- (void)startSyncingForUserName:(NSString *)userName withPassword:(NSString *)password baseURL:(NSString *)baseURL
+{
+    self.userName = userName;
+    self.password = password;
+    self.baseURL = baseURL;
+    
+    [self startSyncing];
+}
+
+- (void)getChanges
+{
+    if (nil == self.cardDavSyncToken)
+    {
+        [self getSyncToken];
+    }
+    else
+    {
+        [self syncChangesFromServer];
+    }
 }
 
 - (void)syncContactFromServer:(CardDAVContactInfo *)contactInfo

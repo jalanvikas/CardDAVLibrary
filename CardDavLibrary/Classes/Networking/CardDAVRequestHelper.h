@@ -13,6 +13,11 @@
 
 #pragma mark - Initializer Methods
 
++ (id)requestHelperForValidCardDAVUrlForUserName:(NSString *)userName
+                                        password:(NSString *)password
+                                             url:(NSString *)url
+                                      completion:(void (^)(NSURLResponse *response, id responseObject, NSError *error))completion;
+
 + (id)requestHelperForFullCardDAVInfoForUserName:(NSString *)userName
                                         password:(NSString *)password
                                              url:(NSString *)url
