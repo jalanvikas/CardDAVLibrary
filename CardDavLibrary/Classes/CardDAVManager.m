@@ -8,6 +8,8 @@
 
 #import "CardDAVManager.h"
 #import "CardDAVRequestHelper.h"
+#import "VCardsListParser.h"
+#import "CardDAVContactInfo+Private.h"
 
 #define FETCHING_VALID_CARD_DAV_SERVER_URL          @".well-known/carddav"
 
@@ -23,6 +25,10 @@
 
 @property (nonatomic, copy) NSString *cardDavSyncToken;
 @property (nonatomic, copy) NSString *cardDavCTag;
+
+@property (nonatomic, strong) NSMutableArray *allContacts;
+@property (nonatomic, strong) NSMutableArray *syncingContacts;
+@property (nonatomic, strong) NSMutableDictionary *contactMapping;
 
 #pragma mark - Private Methods
 
@@ -42,6 +48,8 @@
 
 - (void)syncChangesFromServer;
 
+- (void)syncVCardInfoForContactAtIndex:(int)index;
+
 @end
 
 
@@ -53,7 +61,7 @@
     self = [super init];
     if (self)
     {
-        
+        self.contactMapping = [NSMutableDictionary dictionary];
     }
     
     return self;
@@ -139,6 +147,17 @@
         }
         else if ([responseObject isKindOfClass:[NSData class]])
         {
+            VCardsListParser *vcardsListParser = [[VCardsListParser alloc] init];
+            [vcardsListParser parseXMLData:responseObject completionHandler:^(NSMutableArray *contacts, NSError *error){
+                if (nil == error)
+                {
+                    self.syncingContacts = contacts;
+                    if (0 < [self.syncingContacts count])
+                    {
+                        [self syncVCardInfoForContactAtIndex:0];
+                    }
+                }
+            }];
             self.response = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
             [[NSNotificationCenter defaultCenter] postNotificationName:CARD_DAV_SYNC_COMPLETED_NOTIFICATION object:nil];
             [self getSyncToken];
@@ -197,6 +216,51 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:CARD_DAV_SYNC_STARTED_NOTIFICATION object:nil];
     [requestHelper startRequest];
+}
+
+- (void)syncVCardInfoForContactAtIndex:(int)index
+{
+    if (index < [self.syncingContacts count])
+    {
+        CardDAVContactInfo *contactInfo = [self.syncingContacts objectAtIndex:index];
+        CardDAVRequestHelper *requestHelper = [CardDAVRequestHelper requestHelperForVCardInfoForUserName:self.userName password:self.password url:[self getURLForVCard:contactInfo] completion:^(NSURLResponse *response, id responseObject, NSError *error)
+       {
+           if (error)
+           {
+               self.errorInfo = [NSString stringWithFormat:@"Error: %@", error];
+           }
+           else if ((nil != response) && ([response isKindOfClass:[NSHTTPURLResponse class]]) && (401 == [(NSHTTPURLResponse *)response statusCode]))
+           {
+               self.errorInfo = @"Invalid Username/Password";
+           }
+           else if ([responseObject isKindOfClass:[NSData class]])
+           {
+               NSString *vcardInfo = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+               [contactInfo updateVCardInfoWithServerResponse:vcardInfo];
+               if (nil != [contactInfo UID])
+               {
+                   if (nil == [self.contactMapping objectForKey:[contactInfo UID]])
+                   {
+                       [self.allContacts addObject:contactInfo];
+                       [self.contactMapping setObject:[NSString stringWithFormat:@"%d", (int)([self.allContacts count] - 1)] forKey:[contactInfo UID]];
+                   }
+                   else
+                   {
+                       int contactIndex = [[self.contactMapping objectForKey:[contactInfo UID]] intValue];
+                       [[self.allContacts objectAtIndex:contactIndex] updateWithContact:contactInfo];
+                   }
+               }
+               
+               [self.syncingContacts removeObjectAtIndex:index];
+               if (0 < [self.syncingContacts count])
+               {
+                   [self syncVCardInfoForContactAtIndex:0];
+               }
+           }
+       }];
+        
+        [requestHelper startRequest];
+    }
 }
 
 #pragma mark - Custom Method

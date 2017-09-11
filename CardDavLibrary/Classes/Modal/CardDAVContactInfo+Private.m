@@ -12,6 +12,11 @@
 
 #pragma mark - Private Methods
 
+- (void)updateWithContact:(CardDAVContactInfo *)contact
+{
+    
+}
+
 - (NSString *)getVCardInfoForServerRequest
 {
     return @"";

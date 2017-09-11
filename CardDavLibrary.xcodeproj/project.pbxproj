@@ -75,6 +75,9 @@
 		F661A68F1C59E84E0031AF05 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F661A6881C59E84E0031AF05 /* ViewController.m */; };
 		F6A58E241C59E9BB004340D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F661A6801C59E84E0031AF05 /* LaunchScreen.storyboard */; };
 		F6A58E251C59E9BB004340D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F661A6821C59E84E0031AF05 /* Main.storyboard */; };
+		F6C257C21C60A21D00BDEEEF /* VCardsListParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F6C257C01C60A21D00BDEEEF /* VCardsListParser.h */; };
+		F6C257C31C60A21D00BDEEEF /* VCardsListParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F6C257C11C60A21D00BDEEEF /* VCardsListParser.m */; };
+		F6C257C41C60A21D00BDEEEF /* VCardsListParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F6C257C11C60A21D00BDEEEF /* VCardsListParser.m */; };
 		F6C68F261C59F7D200BBEDCF /* CardDAVUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = F6C68F241C59F7D200BBEDCF /* CardDAVUtilities.h */; };
 		F6C68F271C59F7D200BBEDCF /* CardDAVUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F6C68F251C59F7D200BBEDCF /* CardDAVUtilities.m */; };
 		F6C68F281C59FC2D00BBEDCF /* CardDAVUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F6C68F251C59F7D200BBEDCF /* CardDAVUtilities.m */; };
@@ -147,6 +150,9 @@
 		F661A6871C59E84E0031AF05 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		F661A6881C59E84E0031AF05 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		F66E3ECD1C46288300D25F49 /* CardDavLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CardDavLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6C257C01C60A21D00BDEEEF /* VCardsListParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCardsListParser.h; sourceTree = "<group>"; };
+		F6C257C11C60A21D00BDEEEF /* VCardsListParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCardsListParser.m; sourceTree = "<group>"; };
+		F6C257C51C60A59B00BDEEEF /* ParserElements.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParserElements.h; sourceTree = "<group>"; };
 		F6C68F241C59F7D200BBEDCF /* CardDAVUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardDAVUtilities.h; sourceTree = "<group>"; };
 		F6C68F251C59F7D200BBEDCF /* CardDAVUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardDAVUtilities.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -184,6 +190,7 @@
 			children = (
 				F661A60B1C59E7A20031AF05 /* CardDAVManager.h */,
 				F661A60C1C59E7A20031AF05 /* CardDAVManager.m */,
+				F6C257BF1C609FCD00BDEEEF /* Parsers */,
 				F661A60D1C59E7A20031AF05 /* Constants */,
 				F661A60F1C59E7A20031AF05 /* External */,
 				F661A6331C59E7A20031AF05 /* Modal */,
@@ -312,6 +319,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		F6C257BF1C609FCD00BDEEEF /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				F6C257C01C60A21D00BDEEEF /* VCardsListParser.h */,
+				F6C257C11C60A21D00BDEEEF /* VCardsListParser.m */,
+				F6C257C51C60A59B00BDEEEF /* ParserElements.h */,
+			);
+			path = Parsers;
+			sourceTree = "<group>";
+		};
 		F6C68F231C59F7AA00BBEDCF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -328,6 +345,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6C257C21C60A21D00BDEEEF /* VCardsListParser.h in Headers */,
 				F661A6511C59E7A20031AF05 /* AFURLSessionManager.h in Headers */,
 				F661A63D1C59E7A20031AF05 /* CardDAVManager.h in Headers */,
 				F661A6571C59E7A20031AF05 /* AFImageDownloader.h in Headers */,
@@ -457,6 +475,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F661A64A1C59E7A20031AF05 /* AFSecurityPolicy.m in Sources */,
+				F6C257C41C60A21D00BDEEEF /* VCardsListParser.m in Sources */,
 				F661A6501C59E7A20031AF05 /* AFURLResponseSerialization.m in Sources */,
 				F661A6761C59E7A20031AF05 /* CardDAVContactInfo.m in Sources */,
 				F661A6431C59E7A20031AF05 /* AFHTTPSessionManager.m in Sources */,
@@ -496,6 +515,7 @@
 				F661A6651C59E7A20031AF05 /* UIImageView+AFNetworking.m in Sources */,
 				F661A66F1C59E7A20031AF05 /* UIWebView+AFNetworking.m in Sources */,
 				F661A63E1C59E7A20031AF05 /* CardDAVManager.m in Sources */,
+				F6C257C31C60A21D00BDEEEF /* VCardsListParser.m in Sources */,
 				F661A6611C59E7A20031AF05 /* UIButton+AFNetworking.m in Sources */,
 				F661A6581C59E7A20031AF05 /* AFImageDownloader.m in Sources */,
 				F661A65E1C59E7A20031AF05 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
